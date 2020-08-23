@@ -1,6 +1,6 @@
 {
   "name": "@halloverden/number-utilities-ts",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Typescript library with utility functions for a bunch of numbers",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
