@@ -1,5 +1,5 @@
 {
-  "name": "@halloverden/number-utilities",
+  "name": "@halloverden/number-utilities-ts",
   "version": "1.0.0",
   "description": "Typescript library with utility functions for a bunch of numbers",
   "main": "./dist/index.js",
