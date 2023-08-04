@@ -1,26 +1,29 @@
 const path = require('path');
-
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { TsconfigPathsPlugin } = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
-  entry: path.join(__dirname, '/index.ts'),
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'index.js',
-    library: '$',
-    libraryTarget: 'umd',
-    globalObject: 'this'
+  experiments: {
+    outputModule: true
   },
-  plugins: [
-    new CleanWebpackPlugin()
-  ],
+  target: 'web',
+  output: {
+    filename: 'index.min.js',
+    globalObject: 'this',
+    library: {
+      type: 'module'
+    }
+  },
+  entry: path.join(__dirname, '/index.ts'),
   module: {
     rules: [
       {
         test: /\.tsx?$/,
         loader: 'ts-loader',
-        exclude: [/node_modules/]
+        options: {
+          useBabel: true,
+          babelCore: '@babel/core'
+        },
+        exclude: /node_modules/
       }
     ]
   },
@@ -30,5 +33,7 @@ module.exports = {
     plugins: [
       new TsconfigPathsPlugin()
     ]
-  }
+  },
+  // Produce sourcemap
+  devtool: 'source-map'
 };
