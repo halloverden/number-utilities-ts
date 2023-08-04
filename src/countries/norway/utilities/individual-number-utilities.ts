@@ -1,47 +1,83 @@
-import { SsnIndividualNumberMappingEntity } from '@norway/types';
+import { IndRange, NinIndividualNumberRangeMappingType, NinTypeEnum, YearRange } from '../types';
 
-export const ssnFactors = [3, 7, 6, 1, 8, 9, 4, 5, 2];
+/**
+ * See: https://lovdata.no/dokument/SF/forskrift/2017-07-14-1201
+ */
+export const ninIndividualNumberMappings: NinIndividualNumberRangeMappingType[] = [
+  { indStart: 500, indEnd: 749, fromYear: 1854, toYear: 1899 },
+  { indStart: 900, indEnd: 999, fromYear: 1940, toYear: 1999 },
+  { indStart: 0, indEnd: 499, fromYear: 1900, toYear: 1999 },
+  { indStart: 500, indEnd: 999, fromYear: 2000, toYear: 2039 }
+];
 
-export const ssnIndividualNumberMappings = [
-  new SsnIndividualNumberMappingEntity(1854, 1899, 500, 749),
-  new SsnIndividualNumberMappingEntity(1940, 1999, 900, 999),
-  new SsnIndividualNumberMappingEntity(1900, 1999, 0, 499),
-  new SsnIndividualNumberMappingEntity(2000, 2039, 500, 999)
+export const ninIndividualNumberDNumberMappings: NinIndividualNumberRangeMappingType[] = [
+  { indStart: 0, indEnd: 499, fromYear: 1854, toYear: 1999 },
+  { indStart: 500, indEnd: 999, fromYear: 2000, toYear: 2300 }
 ];
 
 /**
- * Get the range of individual numbers that are valid for a given year
+ * Returns the range of individual numbers that are valid for a given year
  *
  * @param year
+ * @param type
  */
-export function getIndRangeFromYear(year: number): { indStart: number; indEnd: number } | null {
-  const validRanges = [];
+export function getIndRangesFromYear(year: number, type: NinTypeEnum = NinTypeEnum.TYPE_REGULAR_NIN): IndRange[] {
+  const validMappings: NinIndividualNumberRangeMappingType[] = [];
 
-  for (const mapping of ssnIndividualNumberMappings) {
+  const availableMappings =
+    type === NinTypeEnum.TYPE_D_NUMBER ? ninIndividualNumberDNumberMappings : ninIndividualNumberMappings;
+
+  for (const mapping of availableMappings) {
     if (year >= mapping.fromYear && year <= mapping.toYear) {
-      validRanges.push(mapping);
+      validMappings.push(mapping);
     }
   }
 
-  if (validRanges.length === 0) {
-    return null;
+  if (validMappings.length === 0) {
+    throw new Error('No valid range for given year: ' + year.toString());
   }
 
-  if (validRanges.length === 1) {
-    return { indStart: validRanges[0].indStart, indEnd: validRanges[0].indEnd };
-  }
+  return validMappings.map((m) => {
+    return { indStart: m.indStart, indEnd: m.indEnd };
+  });
+}
 
-  let indStart = validRanges[0].indStart;
-  let indEnd = validRanges[0].indEnd;
+/**
+ * Returns the range of individual number range mappings that are valid for a given individual number
+ *
+ * @param ind
+ * @param type
+ */
+export function getNinIndividualNumberRangeMappingTypesFromInd(
+  ind: number,
+  type: NinTypeEnum = NinTypeEnum.TYPE_REGULAR_NIN
+): NinIndividualNumberRangeMappingType[] {
+  const validMappings: NinIndividualNumberRangeMappingType[] = [];
 
-  for (let j = 1; j < validRanges.length; j++) {
-    if (indStart > validRanges[j].indStart) {
-      indStart = validRanges[j].indStart;
+  const availableMappings =
+    type === NinTypeEnum.TYPE_D_NUMBER ? ninIndividualNumberDNumberMappings : ninIndividualNumberMappings;
+
+  for (const mapping of availableMappings) {
+    if (ind >= mapping.indStart && ind <= mapping.indEnd) {
+      validMappings.push(mapping);
     }
-    if (indEnd < validRanges[j].indEnd) {
-      indEnd = validRanges[j].indEnd;
-    }
   }
 
-  return { indStart, indEnd };
+  if (validMappings.length === 0) {
+    throw new Error('No valid range for given individual number: ' + ind.toString());
+  }
+
+  return validMappings;
+}
+
+/**
+ * Returns the range of years that are valid for a given individual number
+ *
+ * @param ind
+ * @param type
+ */
+export function getYearRangesFromInd(ind: number, type: NinTypeEnum = NinTypeEnum.TYPE_REGULAR_NIN): YearRange[] {
+  return getNinIndividualNumberRangeMappingTypesFromInd(ind, type).map((m) => {
+    return { fromYear: m.fromYear, toYear: m.toYear };
+  });
 }

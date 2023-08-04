@@ -2,34 +2,43 @@
  * Calculates a single control digit from the given input
  *
  * @param input
+ * @param weights
+ * @param acceptedRemainders Which remainders will be returned as is
+ * @param onRemainder1 What to return if remainder is 1
  *
- * @return number
+ * @return string
  */
-export function getMod11ControlDigit(input: string): number | null {
-  let weightNumber = 2;
-  let modSum = 0;
-
-  for (let i = input.length - 1; i >= 0; i--) {
-    const digit = parseInt(input.charAt(i), 10);
-    if (isNaN(digit)) {
-      return null;
-    }
-    modSum += weightNumber * digit;
-
-    if (++weightNumber > 7) {
-      weightNumber = 2;
-    }
+export function getMod11ControlDigit(
+  input: string,
+  weights: number[],
+  acceptedRemainders = [0],
+  onRemainder1 = '-'
+): string {
+  const length = input.length;
+  if (length !== weights.length) {
+    throw new Error('A weight needs to be assigned to each digit');
   }
 
-  const remainder = modSum % 11;
+  let sum = 0;
+  for (let i = 0; i < length; i++) {
+    if (!new RegExp('^\\d$').test(input[i])) {
+      throw new Error('All characters in the input string must be digits');
+    }
+
+    sum += parseInt(input[i], 10) * weights[i];
+  }
+
+  const remainder = sum % 11;
+
+  if (acceptedRemainders.indexOf(remainder) !== -1) {
+    return remainder.toString();
+  }
 
   switch (remainder) {
-    case 0:
-      return remainder;
     case 1:
-      return null;
+      return onRemainder1;
     default:
-      return 11 - remainder;
+      return (11 - remainder).toString();
   }
 }
 
@@ -38,45 +47,32 @@ export function getMod11ControlDigit(input: string): number | null {
  *
  * @param input
  * @param numberOfDigits
+ * @param throwIfOne
  *
  * @return number[]
  */
-export function getMod11ControlDigits(input: string, numberOfDigits: number): (number | null)[] {
+export function getMod11ControlDigits(input: string, numberOfDigits: number, throwIfOne = true): string[] {
   const controlDigits = [];
   for (let i = numberOfDigits; i > 0; i--) {
-    const c = getMod11ControlDigit(input);
+    const c = getMod11ControlDigit(input, getDefaultMod11WeightsForLength(input.length));
+    if ('-' === c && throwIfOne) {
+      throw new Error('A control digit was 1. Aborting...');
+    }
     controlDigits.push(c);
-    input += null === c ? '-' : c.toString();
+    input += c.toString();
   }
 
   return controlDigits;
 }
 
-/**
- * @param input
- *
- * @return boolean true if last digit is the same as the result of running getMod11ControlDigit() with the other digits
- */
-export function checkMod11ControlDigit(input: string): boolean {
-  return parseInt(input.charAt(input.length - 1), 10) === getMod11ControlDigit(input.substr(0, input.length - 1));
-}
+export function getDefaultMod11WeightsForLength(length: number): number[] {
+  let w = 2;
+  const weights = [];
 
-/**
- * Runs the checkMod11ControlDigit the given number of times to ensure that all control digits are valid
- *
- * @param input
- * @param numberOfDigits
- *
- * @return boolean
- */
-export function checkMod11ControlDigits(input: string, numberOfDigits: number): boolean {
-  for (let i = numberOfDigits; i > 0; i--) {
-    if (!checkMod11ControlDigit(input)) {
-      return false;
-    }
-
-    input = input.substr(0, input.length - 1);
+  for (let i = 0; i < length; i++) {
+    weights.push(w);
+    w = w >= 7 ? 2 : w + 1;
   }
 
-  return true;
+  return weights.reverse();
 }
