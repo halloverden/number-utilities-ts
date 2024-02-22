@@ -1,0 +1,149 @@
+.alert {
+  border-radius: 0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.11);
+  display: flex;
+  margin: 8px 0;
+
+  .icon {
+    align-items: center;
+    border: 1px solid #bdbdbd;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+    flex: 0 0 45px;
+
+    &:after {
+      transform: rotate(45deg);
+      display: block;
+      content: '';
+      width: 10px;
+      height: 10px;
+      border: 1px solid #bdbdbd;
+      position: absolute;
+      border-left: 0;
+      border-bottom: 0;
+      top: 50%;
+      right: -6px;
+      margin-top: -5px;
+      background: #fff;
+    }
+  }
+
+  .alert-content {
+    padding: 5px 15px;
+  }
+
+  &.alert-white {
+    &.rounded {
+      border-radius: 3px;
+      -webkit-border-radius: 3px;
+
+      .icon {
+        border-radius: 3px 0 0 3px;
+        -webkit-border-radius: 3px 0 0 3px;
+
+        span {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  &.alert-danger {
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    color: #a94442;
+
+    .icon {
+      border-color: #ca452e;
+      background: #da4932;
+
+      &:after {
+        border-color: #ca452e;
+        background: #da4932;
+      }
+    }
+
+    hr {
+      border-top-color: #e4b9c0;
+    }
+
+    .alert-link {
+      color: #843534;
+    }
+  }
+
+  &.alert-info {
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+    color: #31708f;
+
+    .icon {
+      border-color: #3a8ace;
+      background: #4d90fd;
+
+      &:after {
+        border-color: #3a8ace;
+        background: #4d90fd;
+      }
+    }
+
+    hr {
+      border-top-color: #a6e1ec;
+    }
+
+    .alert-link {
+      color: #245269;
+    }
+  }
+
+  &.alert-warning {
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+    color: #8a6d3b;
+
+    .icon {
+      border-color: #d68000;
+      background: #fc9700;
+
+      &:after {
+        border-color: #d68000;
+        background: #fc9700;
+      }
+    }
+
+    hr {
+      border-top-color: #f7e1b5;
+    }
+
+    .alert-link {
+      color: #66512c;
+    }
+  }
+
+  &.alert-success {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #3c763d;
+
+    .icon {
+      border-color: #54a754;
+      background: #60c060;
+
+      &:after {
+        border-color: #54a754;
+        background: #60c060;
+      }
+    }
+
+    hr {
+      border-top-color: #c9e2b3;
+    }
+
+    .alert-link {
+      color: #2b542c;
+    }
+
+  }
+}

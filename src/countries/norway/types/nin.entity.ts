@@ -1,5 +1,5 @@
 import { validateNin } from '../validators';
-import { NinTypeEnum } from './nin-type.enum';
+import { NinType } from './nin-type';
 import {
   isDNumberPattern,
   isHNumberPattern,
@@ -15,9 +15,9 @@ export class NinEntity {
     }
   }
 
-  private _type?: NinTypeEnum;
+  private _type?: NinType;
 
-  get type(): NinTypeEnum {
+  get type(): NinType {
     this.isRegularNin();
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return this._type!;
@@ -29,34 +29,34 @@ export class NinEntity {
 
   isRegularNin(): boolean {
     if (
-      this._type === NinTypeEnum.TYPE_REGULAR_NIN ||
+      this._type === NinType.TYPE_REGULAR_NIN ||
       (!this.isDNumber() && !this.isHNumber() && !this.isNprSyntheticNin())
     ) {
-      this._type = NinTypeEnum.TYPE_REGULAR_NIN;
+      this._type = NinType.TYPE_REGULAR_NIN;
       return true;
     }
     return false;
   }
 
   isDNumber(): boolean {
-    if (this._type === NinTypeEnum.TYPE_D_NUMBER || isDNumberPattern(this._nin)) {
-      this._type = NinTypeEnum.TYPE_D_NUMBER;
+    if (this._type === NinType.TYPE_D_NUMBER || isDNumberPattern(this._nin)) {
+      this._type = NinType.TYPE_D_NUMBER;
       return true;
     }
     return false;
   }
 
   isHNumber(): boolean {
-    if (this._type === NinTypeEnum.TYPE_H_NUMBER || isHNumberPattern(this._nin)) {
-      this._type = NinTypeEnum.TYPE_H_NUMBER;
+    if (this._type === NinType.TYPE_H_NUMBER || isHNumberPattern(this._nin)) {
+      this._type = NinType.TYPE_H_NUMBER;
       return true;
     }
     return false;
   }
 
   isNprSyntheticNin(): boolean {
-    if (this._type === NinTypeEnum.TYPE_NPR_SYNTHETIC || isNprSyntheticNinPattern(this._nin)) {
-      this._type = NinTypeEnum.TYPE_NPR_SYNTHETIC;
+    if (this._type === NinType.TYPE_NPR_SYNTHETIC || isNprSyntheticNinPattern(this._nin)) {
+      this._type = NinType.TYPE_NPR_SYNTHETIC;
       return true;
     }
     return false;

@@ -3,5 +3,4 @@ export * from './src/countries/norway/types';
 export * from './src/countries/norway/utilities';
 export * from './src/countries/norway/validators';
 export * from './src/international/utilities';
-export * from './src/international/validators';
 

@@ -1,4 +1,4 @@
-import { NinEntity, NinTypeEnum } from '../types';
+import { NinEntity, NinType } from '../types';
 import { getIndRangesFromYear } from '../utilities';
 import { getMod11ControlDigit, getRandomNumberFromRange, zeroPadding } from '../../../international/utilities';
 import { C1_WEIGHTS, C2_WEIGHTS } from '../validators';
@@ -9,7 +9,7 @@ import { C1_WEIGHTS, C2_WEIGHTS } from '../validators';
  * @param date
  * @param type
  */
-export function getRandomNinForDate(date: Date, type: NinTypeEnum = NinTypeEnum.TYPE_REGULAR_NIN): NinEntity {
+export function getRandomNinForDate(date: Date, type: NinType = NinType.TYPE_REGULAR_NIN): NinEntity {
   const d = getDate(date.getDate(), type);
   const m = getMonth(date.getMonth() + 1, type);
   const y = date.getFullYear();
@@ -39,20 +39,20 @@ export function getRandomNinForDate(date: Date, type: NinTypeEnum = NinTypeEnum.
   return new NinEntity(ninWithoutControlDigits + c1 + c2);
 }
 
-function getDate(date: number, type: NinTypeEnum): number {
+function getDate(date: number, type: NinType): number {
   switch (type) {
-    case NinTypeEnum.TYPE_D_NUMBER:
+    case NinType.TYPE_D_NUMBER:
       return date + 40;
     default:
       return date;
   }
 }
 
-function getMonth(month: number, type: NinTypeEnum): number {
+function getMonth(month: number, type: NinType): number {
   switch (type) {
-    case NinTypeEnum.TYPE_H_NUMBER:
+    case NinType.TYPE_H_NUMBER:
       return month + 40;
-    case NinTypeEnum.TYPE_NPR_SYNTHETIC:
+    case NinType.TYPE_NPR_SYNTHETIC:
       return month + 80;
     default:
       return month;

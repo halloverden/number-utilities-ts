@@ -3,8 +3,360 @@
 <head>
   <meta charset='UTF-8'>
   <title>Number Utilities TS - docs</title>
+  <link rel='stylesheet' href='./styles/styles.css' />
+  <link rel='icon' sizes='any' href='./assets/brand/favicon.svg' type='image/svg+xml' />
+
+  <!-- highlight.js -->
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css'>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js'></script>
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/node-repl.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/typescript.min.js'></script>
+
+  <script>
+    window.addEventListener('load', () => {
+      hljs.highlightAll();
+    });
+  </script>
 </head>
 <body>
-<p>To be had</p>
+
+<div class='container'>
+  <aside class='sidebar'>
+    <h1 class='header'>number-utilities-ts</h1>
+
+    <section class='intro'>
+      <p class='warning'>
+        This stuff is a work in progress.
+      </p>
+      <p>
+        This library contains utility functions for a bunch of different types of numbers.
+        Some of these utilities are scoped to specific countries, and some are universal.
+      </p>
+    </section>
+    <nav>
+      <ul>
+        <li><a href='#installation' title='Installation'>Installation</a></li>
+        <li><a href='#test-and-build' title='Test & build'>Test & build</a></li>
+        <li>
+          <a href='#international-utilities' title='International Utilities'>International Utilities</a>
+          <ul>
+            <li><a href='#misc-international-utilities' title='Misc. Utilities'>Misc. Utilities</a></li>
+            <li><a href='#international-mod11-utilities' title='Mod11 Utilities'>Mod11 Utilities</a></li>
+            <li><a href='#international-luhn-utilities' title='Luhn Utilities'>Luhn Utilities</a></li>
+          </ul>
+        </li>
+        <li><a href='#country-specific-utilities' title='Country Specific Utilities'>Country Specific Utilities</a>
+          <ul>
+            <li>
+              <a href='#country-specific-norway' title='Norway'>Norway</a> 🇳🇴
+              <ul>
+                <li><a href='#country-specific-norway-functions' title='Functions'>Functions</a></li>
+                <li><a href='#country-specific-norway-types' title='Types'>Types</a></li>
+                <li><a href='#country-specific-norway-validators' title='Validators'>Validators</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href='#contribution-guidelines' title='Contribution Guidelines'>Contribution Guidelines</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <div class='content'>
+    <section class='documentation'>
+      <h2 id='installation'>Installation</h2>
+      <pre><code class='language-node-repl'>npm i --save @halloverden/number-utilities-ts</code></pre>
+      <h2 id='test-and-build'>Test & build</h2>
+      <p>
+        Test with
+      </p>
+      <pre><code class='language-node-repl'>npm run test</code></pre>
+      <p>
+        Build with
+      </p>
+      <pre><code class='language-node-repl'>npm run build</code></pre>
+
+      <section class='international'>
+        <h2 id='international-utilities'>International Utilities</h2>
+        <h3 id='misc-international-utilities'>Misc. International Utilities</h3>
+        <pre><code class='language-typescript'>checkDate(year: number, month: number, day: number): boolean</code></pre>
+        <p>
+          Takes a date, and returns true if the date actually exists. Returns false otherwise.
+        </p>
+
+        <pre><code class='language-typescript'>getRandomNumberFromRange(min: number, max: number): number</code></pre>
+        <p>
+          Returns a random number from the given range of numbers.
+        </p>
+
+        <pre><code class='language-typescript'>zeroPadding(value: string, length = 2): string</code></pre>
+        <p>
+          This function returns a zero padded string with the length specified.
+          If the length of the incoming value is longer than or equal to the specified length,
+          the value is returned unmodified.
+        </p>
+
+        <h3 id='international-mod11-utilities'>International Mod11 Utilities</h3>
+        <pre><code class='language-typescript'>getMod11ControlDigit(input: string, weights: number[], acceptedRemainders = [0], onRemainder1 = '-'): string</code></pre>
+        <p>
+          Calculates a single control digit from the given input.
+        </p>
+
+        <pre><code class='language-typescript'>getMod11ControlDigits(input: string, numberOfDigits: number, throwIfOne = true): string[]</code></pre>
+        <p>
+          Runs the getMod11ControlDigit the given number of times, and returns an array of control digits.
+        </p>
+
+        <pre><code class='language-typescript'>getDefaultMod11WeightsForLength(length: number): number[]</code></pre>
+        <p>
+          Returns an array of numbers containing the default weights for mod11.
+          The length of the array is based on the given length.
+          The given length represents the length of the number to work with.
+        </p>
+
+        <h3 id='international-luhn-utilities'>International Luhn Utilities</h3>
+        <pre><code class='language-typescript'>getLuhnControlDigit(input: string): number</code></pre>
+        <p>
+          Returns a single control digit for the given input.
+        </p>
+
+        <pre><code class='language-typescript'>getLuhnControlDigits(input: string, numberOfDigits: number): number[]</code></pre>
+        <p>
+          Returns an array of control digits for the given input.
+        </p>
+
+        <pre><code class='language-typescript'>checkLuhnControlDigit(input: string): boolean</code></pre>
+        <p>
+          Returns true if the last digit of the given string is a valid luhn control digit for the first part of the
+          given
+          string.
+        </p>
+
+        <pre><code class='language-typescript'>checkLuhnControlDigits(input: string, numberOfDigits: number): boolean</code></pre>
+        <p>
+          Returns true if the given number of digits from the end of the given input are valid luhn control numbers.
+        </p>
+      </section>
+      <section class='country-specific'>
+        <h2 id='country-specific-utilities'>Country Specific Utilities</h2>
+        <section class='norway'>
+          <h3 id='country-specific-norway'>Norway 🇳🇴</h3>
+          <h4 id='country-specific-norway-functions'>Functions</h4>
+          <pre><code class='language-typescript'>generateEveryNinForDate(date: Date): NinListEntity</code></pre>
+          <p>
+            Returns a NinListEntity containing all valid NINs for the given date.
+          </p>
+
+          <pre><code class='language-typescript'>getRandomNinForDate(date: Date, type: NinTypeEnum = NinTypeEnum.TYPE_REGULAR_NIN): NinEntity</code></pre>
+          <p>
+            Returns a NinEntity with a random NIN for the given date and NIN type.
+          </p>
+
+          <pre><code class='language-typescript'>getIndRangesFromYear(year: number, type: NinTypeEnum = NinTypeEnum.TYPE_REGULAR_NIN): IndRange[]</code></pre>
+          <p>
+            Returns the individual number ranges that are valid for the given year and the given NIN type.
+          </p>
+
+          <pre><code class='language-typescript'>getNinIndividualNumberRangeMappingTypesFromInd(ind: number, type: NinTypeEnum = NinTypeEnum.TYPE_REGULAR_NIN): NinIndividualNumberRangeMapping[]</code></pre>
+          <p>
+            Returns individual number ranges that are valid for the given individual number.
+          </p>
+
+          <pre><code class='language-typescript'>getYearRangesFromInd(ind: number, type: NinTypeEnum = NinTypeEnum.TYPE_REGULAR_NIN): YearRange[]</code></pre>
+          <p>
+            Returns the range of years that are valid for a given individual number.
+          </p>
+
+          <pre><code class='language-typescript'>getBirthDateFromNinEntity(ninEntity: NinEntity): Date</code></pre>
+          <p>
+            Returns a Date instance based on the given NinEntity.
+          </p>
+
+          <pre><code class='language-typescript'>getDayFromNinEntity(ninEntity: NinEntity): number</code></pre>
+          <p>
+            Returns the day from the NIN in the given NinEntity.
+          </p>
+
+          <pre><code class='language-typescript'>getMonthFromNinEntity(ninEntity: NinEntity): number</code></pre>
+          <p>
+            Returns the month from the NIN in the given NinEntity.
+          </p>
+
+          <pre><code class='language-typescript'>getYearFromNinEntity(ninEntity: NinEntity): number</code></pre>
+          <p>
+            Returns the year from the NIN in the given NinEntity.
+          </p>
+
+          <pre><code class='language-typescript'>getYearFromNin(nin: string): number</code></pre>
+          <p>
+            Returns the year from the NIN in the given NIN.
+          </p>
+
+          <pre><code class='language-typescript'>isDNumberPattern(nin: string): boolean</code></pre>
+          <p>
+            Returns true if the given NIN follows the D-number pattern.
+          </p>
+
+          <pre><code class='language-typescript'>isFemaleNinPattern(nin: string): boolean</code></pre>
+          <p>
+            Returns true if the given NIN is follows the pattern of a NIN for a female.
+          </p>
+
+          <pre><code class='language-typescript'>isHNumberPattern(nin: string): boolean</code></pre>
+          <p>
+            Returns true if the given NIN is follows H-number pattern.
+          </p>
+
+          <pre><code class='language-typescript'>isMaleNinPattern(nin: string): boolean</code></pre>
+          <p>
+            Returns true if the given NIN is follows the pattern of a NIN for a male.
+          </p>
+
+          <pre><code class='language-typescript'>isNinPattern(nin: string): boolean</code></pre>
+          <p>
+            Returns true if the given NIN follows the NIN pattern.
+          </p>
+
+          <pre><code class='language-typescript'>isNprSyntheticNinPattern(nin: string): boolean</code></pre>
+          <p>
+            Returns true if the given NIN follows the Norwegian National Population Registry synthetic NIN pattern.
+          </p>
+
+          <pre><code class='language-typescript'>isRegularNinPattern(nin: string): boolean</code></pre>
+          <p>
+            Returns true if the given NIN follows the regular pattern.
+            This function checks that the given nin is NOT a D-number, NOT an H-number, ang NOT an NPR synthetic NIN.
+          </p>
+
+          <h4 id='country-specific-norway-types'>Types</h4>
+          <pre><code class='language-typescript'>type IndRange {...}</code></pre>
+          <p>
+            Represents a range of individual numbers.
+          </p>
+
+          <pre><code class='language-typescript'>class NinEntity {...}</code></pre>
+          <p>
+            The NinEntity is a utility class for representing a NIN. It expects a valid nin, and will throw an error if
+            the
+            given nin is invalid.
+            If you want to validate a nin without trying to create an instance of NinEntity, use the <a
+            class='inline-code' href='#country-specific-norway-validators-validate-nin'
+            title='validateNin'>validateNin</a>
+            function
+            instead.
+          </p>
+          <pre><code class='language-typescript'>
+try {
+  let nin = new NinEntity('12345678912');
+} catch (e) {
+  // invalid nin
+}
+          </code></pre>
+          <p>
+            The class has a couple of utility methods:
+          </p>
+          <ul>
+            <li>
+              type (getter) - Returns the NinType
+            </li>
+            <li>
+              nin (getter) - Returns the NIN as a string
+            </li>
+            <li>
+              isRegularNin(): boolean - See: isRegularNinPattern(nin: string): boolean
+            </li>
+            <li>
+              isDNumber(): boolean - See: isDNumberPattern(nin: string): boolean
+            </li>
+            <li>
+              isHNumber(): boolean - See: isHNumberPattern(nin: string): boolean
+            </li>
+            <li>
+              isNprSyntheticNin(): boolean - See: isNprSyntheticNinPattern(nin: string): boolean
+            </li>
+            <li>
+              isMaleNinPattern(): boolean - See: isMaleNinPattern(nin: string): boolean
+            </li>
+            <li>
+              isFemaleNinPattern(): boolean - See: isFemaleNinPattern(nin: string): boolean
+            </li>
+          </ul>
+
+          <pre><code class='language-typescript'>type NinIndividualNumberRangeMapping {...}</code></pre>
+          <p>
+            Intersection of IndRage & YearRange.
+          </p>
+
+          <pre><code class='language-typescript'>class NinList {...}</code></pre>
+          <p>
+            Keeps two lists of NINs. One for female, and one for male NINs.
+          </p>
+
+          <pre><code class='language-typescript'>enum NinType {...}</code></pre>
+          <p>
+            An enum representing the different NIN types.
+          </p>
+
+          <pre><code class='language-typescript'>type YearRange {...}</code></pre>
+          <p>
+            Represents a range of years.
+          </p>
+
+          <h4 id='country-specific-norway-validators'>Validators</h4>
+
+          <pre><code class='language-typescript'>validateAccountNumber(accountNumber: string): boolean</code></pre>
+          <p>
+            Returns true if the given account number is valid.
+          </p>
+          <div class='alert alert-info alert-white rounded'>
+            <div class='icon'>
+              <span>ℹ️</span>
+            </div>
+            <div class='alert-content'>
+              <p>
+                Keep in mind that some Norwegian account numbers are also valid Norwegian NINs.
+                You might want to handle this in your application.
+              </p>
+            </div>
+          </div>
+
+          <pre><code class='language-typescript'>validateKidNumber(kidNumber: string): boolean</code></pre>
+          <p>
+            Validates the given KID number.
+          </p>
+          <div class='alert alert-warning alert-white rounded'>
+            <div class='icon'>
+              <span>⚠️</span>
+            </div>
+            <div class='alert-content'>
+              <p><strong>NB!</strong> This function is incomplete. Please read the source code before using it.</p>
+            </div>
+          </div>
+
+          <pre id='country-specific-norway-validators-validate-nin'><code class='language-typescript'>validateNin(nin: string): boolean</code></pre>
+          <p>
+            Returns true if the given nin is valid.
+          </p>
+
+          <pre><code class='language-typescript'>validateOrganizationNumber(orgNumber: string): boolean</code></pre>
+          <p>
+            Returns true if the given organization number is valid.
+          </p>
+        </section>
+      </section>
+    </section>
+    <section class='contribution-guidelines'>
+      <h2 id='contribution-guidelines'>Contribution Guidelines</h2>
+      <p>
+        PRs are very welcome. Official documentation for implementations might be hard to come by, but links are greatly
+        appreciated.
+        For any questions regarding any aspect of the library, feel free to <a
+        href='https://github.com/halloverden/number-utilities-ts/issues' title='Open Github Issue'>open an issue</a>.
+      </p>
+    </section>
+  </div>
+</div>
+
 </body>
 </html>
