@@ -1,4 +1,4 @@
-export class NinListEntity {
+export class NinList {
   private readonly _female: string[] = [];
   private readonly _male: string[] = [];
 
@@ -10,7 +10,7 @@ export class NinListEntity {
     return this._male;
   }
 
-  public addFemale(nin: string): NinListEntity {
+  public addFemale(nin: string): NinList {
     if (!this._female.includes(nin)) {
       this._female.push(nin);
     }
@@ -18,7 +18,7 @@ export class NinListEntity {
     return this;
   }
 
-  public addMale(nin: string): NinListEntity {
+  public addMale(nin: string): NinList {
     if (!this._male.includes(nin)) {
       this._male.push(nin);
     }

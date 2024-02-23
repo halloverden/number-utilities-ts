@@ -1,4 +1,8 @@
-import { getDefaultMod11WeightsForLength, getLuhnControlDigit, getMod11ControlDigit } from '../utilities';
+import {
+  getDefaultMod11WeightsForLength,
+  getLuhnControlDigit,
+  getMod11ControlDigit
+} from '../../../international/utilities';
 
 /**
  * Validates the given KID number

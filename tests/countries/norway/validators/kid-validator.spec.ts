@@ -1,4 +1,4 @@
-import { validateKidNumber } from '@international/validators';
+import { validateKidNumber } from '@norway/validators';
 
 describe('validate()', () => {
   it('should fail if number is neither Mod11 nor Luhn "compatible"', () => {

@@ -6,9 +6,9 @@ import { checkDate } from '../../../international/utilities/date-utilities';
  *
  * @param ninEntity
  */
-export function getBirthDateFromNin(ninEntity: NinEntity): Date {
-  const day = getDayFromNin(ninEntity);
-  const month = getMonthFromNin(ninEntity);
+export function getBirthDateFromNinEntity(ninEntity: NinEntity): Date {
+  const day = getDayFromNinEntity(ninEntity);
+  const month = getMonthFromNinEntity(ninEntity);
   const year = getYearFromNin(ninEntity.nin);
 
   if (!checkDate(year, month, day)) {
@@ -28,7 +28,7 @@ export function getBirthDateFromNin(ninEntity: NinEntity): Date {
  *
  * @param ninEntity
  */
-export function getDayFromNin(ninEntity: NinEntity): number {
+export function getDayFromNinEntity(ninEntity: NinEntity): number {
   const day = parseInt(ninEntity.nin.substring(0, 2), 10);
 
   if (ninEntity.isDNumber()) {
@@ -43,7 +43,7 @@ export function getDayFromNin(ninEntity: NinEntity): number {
  *
  * @param ninEntity
  */
-export function getMonthFromNin(ninEntity: NinEntity): number {
+export function getMonthFromNinEntity(ninEntity: NinEntity): number {
   const month = parseInt(ninEntity.nin.substring(2, 4), 10);
 
   if (ninEntity.isHNumber()) {

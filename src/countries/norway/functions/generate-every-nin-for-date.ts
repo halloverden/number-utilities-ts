@@ -1,4 +1,4 @@
-import { NinListEntity } from '../types';
+import { NinList } from '../types';
 import { getIndRangesFromYear } from '../utilities';
 import { getDefaultMod11WeightsForLength, getMod11ControlDigit, zeroPadding } from '../../../international/utilities';
 import { C1_WEIGHTS, validateNin } from '../validators';
@@ -10,10 +10,10 @@ import { isMaleNinPattern } from './is-male-nin-pattern';
  *
  * @param date
  *
- * @return NinListEntity
+ * @return NinList
  */
-export function generateEveryNinForDate(date: Date): NinListEntity {
-  const ninList: NinListEntity = new NinListEntity();
+export function generateEveryNinForDate(date: Date): NinList {
+  const ninList: NinList = new NinList();
   const indRanges = getIndRangesFromYear(date.getFullYear());
 
   const ninDate =

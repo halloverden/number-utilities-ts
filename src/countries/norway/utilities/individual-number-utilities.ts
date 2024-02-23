@@ -1,16 +1,16 @@
-import { IndRange, NinIndividualNumberRangeMappingType, NinTypeEnum, YearRange } from '../types';
+import { IndRange, NinIndividualNumberRangeMapping, NinType, YearRange } from '../types';
 
 /**
  * See: https://lovdata.no/dokument/SF/forskrift/2017-07-14-1201
  */
-export const ninIndividualNumberMappings: NinIndividualNumberRangeMappingType[] = [
+export const ninIndividualNumberMappings: NinIndividualNumberRangeMapping[] = [
   { indStart: 500, indEnd: 749, fromYear: 1854, toYear: 1899 },
   { indStart: 900, indEnd: 999, fromYear: 1940, toYear: 1999 },
   { indStart: 0, indEnd: 499, fromYear: 1900, toYear: 1999 },
   { indStart: 500, indEnd: 999, fromYear: 2000, toYear: 2039 }
 ];
 
-export const ninIndividualNumberDNumberMappings: NinIndividualNumberRangeMappingType[] = [
+export const ninIndividualNumberDNumberMappings: NinIndividualNumberRangeMapping[] = [
   { indStart: 0, indEnd: 499, fromYear: 1854, toYear: 1999 },
   { indStart: 500, indEnd: 999, fromYear: 2000, toYear: 2300 }
 ];
@@ -21,11 +21,11 @@ export const ninIndividualNumberDNumberMappings: NinIndividualNumberRangeMapping
  * @param year
  * @param type
  */
-export function getIndRangesFromYear(year: number, type: NinTypeEnum = NinTypeEnum.TYPE_REGULAR_NIN): IndRange[] {
-  const validMappings: NinIndividualNumberRangeMappingType[] = [];
+export function getIndRangesFromYear(year: number, type: NinType = NinType.TYPE_REGULAR_NIN): IndRange[] {
+  const validMappings: NinIndividualNumberRangeMapping[] = [];
 
   const availableMappings =
-    type === NinTypeEnum.TYPE_D_NUMBER ? ninIndividualNumberDNumberMappings : ninIndividualNumberMappings;
+    type === NinType.TYPE_D_NUMBER ? ninIndividualNumberDNumberMappings : ninIndividualNumberMappings;
 
   for (const mapping of availableMappings) {
     if (year >= mapping.fromYear && year <= mapping.toYear) {
@@ -50,12 +50,12 @@ export function getIndRangesFromYear(year: number, type: NinTypeEnum = NinTypeEn
  */
 export function getNinIndividualNumberRangeMappingTypesFromInd(
   ind: number,
-  type: NinTypeEnum = NinTypeEnum.TYPE_REGULAR_NIN
-): NinIndividualNumberRangeMappingType[] {
-  const validMappings: NinIndividualNumberRangeMappingType[] = [];
+  type: NinType = NinType.TYPE_REGULAR_NIN
+): NinIndividualNumberRangeMapping[] {
+  const validMappings: NinIndividualNumberRangeMapping[] = [];
 
   const availableMappings =
-    type === NinTypeEnum.TYPE_D_NUMBER ? ninIndividualNumberDNumberMappings : ninIndividualNumberMappings;
+    type === NinType.TYPE_D_NUMBER ? ninIndividualNumberDNumberMappings : ninIndividualNumberMappings;
 
   for (const mapping of availableMappings) {
     if (ind >= mapping.indStart && ind <= mapping.indEnd) {
@@ -76,7 +76,7 @@ export function getNinIndividualNumberRangeMappingTypesFromInd(
  * @param ind
  * @param type
  */
-export function getYearRangesFromInd(ind: number, type: NinTypeEnum = NinTypeEnum.TYPE_REGULAR_NIN): YearRange[] {
+export function getYearRangesFromInd(ind: number, type: NinType = NinType.TYPE_REGULAR_NIN): YearRange[] {
   return getNinIndividualNumberRangeMappingTypesFromInd(ind, type).map((m) => {
     return { fromYear: m.fromYear, toYear: m.toYear };
   });

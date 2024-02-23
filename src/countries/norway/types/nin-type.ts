@@ -1,4 +1,4 @@
-export enum NinTypeEnum {
+export enum NinType {
   TYPE_REGULAR_NIN = 'TYPE_REGULAR_NIN',
   TYPE_D_NUMBER = 'TYPE_D_NUMBER',
   TYPE_H_NUMBER = 'TYPE_H_NUMBER',
@@ -6,8 +6,8 @@ export enum NinTypeEnum {
 }
 
 export const ALL_NIN_TYPES = [
-  NinTypeEnum.TYPE_REGULAR_NIN,
-  NinTypeEnum.TYPE_D_NUMBER,
-  NinTypeEnum.TYPE_H_NUMBER,
-  NinTypeEnum.TYPE_NPR_SYNTHETIC
+  NinType.TYPE_REGULAR_NIN,
+  NinType.TYPE_D_NUMBER,
+  NinType.TYPE_H_NUMBER,
+  NinType.TYPE_NPR_SYNTHETIC
 ];

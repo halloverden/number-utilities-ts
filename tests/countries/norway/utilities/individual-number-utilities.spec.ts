@@ -1,5 +1,5 @@
 import { getIndRangesFromYear, getYearRangesFromInd } from '@norway/utilities';
-import { IndRange, NinTypeEnum, YearRange } from '@norway/types';
+import { IndRange, NinType, YearRange } from '@norway/types';
 
 describe('individual-number-utilities', () => {
   it('getIndRangesFromYear() should throw error for invalid years', () => {
@@ -107,7 +107,7 @@ describe('individual-number-utilities', () => {
     const expected = [
       { indStart: 0, indEnd: 499 }
     ];
-    const actual = getIndRangesFromYear(1890, NinTypeEnum.TYPE_D_NUMBER);
+    const actual = getIndRangesFromYear(1890, NinType.TYPE_D_NUMBER);
 
     expect(actual).toBeTruthy();
     expect(compareArrays(actual, expected)).toBe(true);
@@ -118,7 +118,7 @@ describe('individual-number-utilities', () => {
     const expected = [
       { indStart: 0, indEnd: 499 }
     ];
-    const actual = getIndRangesFromYear(1980, NinTypeEnum.TYPE_D_NUMBER);
+    const actual = getIndRangesFromYear(1980, NinType.TYPE_D_NUMBER);
 
     expect(actual).toBeTruthy();
     expect(compareArrays(actual, expected)).toBe(true);
@@ -129,7 +129,7 @@ describe('individual-number-utilities', () => {
     const expected = [
       { indStart: 500, indEnd: 999 }
     ];
-    const actual = getIndRangesFromYear(2004, NinTypeEnum.TYPE_D_NUMBER);
+    const actual = getIndRangesFromYear(2004, NinType.TYPE_D_NUMBER);
 
     expect(actual).toBeTruthy();
     expect(compareArrays(actual, expected)).toBe(true);
@@ -140,7 +140,7 @@ describe('individual-number-utilities', () => {
     const expected = [
       { indStart: 500, indEnd: 999 }
     ];
-    const actual = getIndRangesFromYear(2020, NinTypeEnum.TYPE_D_NUMBER);
+    const actual = getIndRangesFromYear(2020, NinType.TYPE_D_NUMBER);
 
     expect(actual).toBeTruthy();
     expect(compareArrays(actual, expected)).toBe(true);
@@ -229,7 +229,7 @@ describe('individual-number-utilities', () => {
     const expected = [
       { fromYear: 1854, toYear: 1999 }
     ];
-    const actual = getYearRangesFromInd(25, NinTypeEnum.TYPE_D_NUMBER);
+    const actual = getYearRangesFromInd(25, NinType.TYPE_D_NUMBER);
 
     expect(actual).toBeTruthy();
     expect(compareArrays(actual, expected)).toBe(true);
@@ -240,7 +240,7 @@ describe('individual-number-utilities', () => {
     const expected = [
       { fromYear: 1854, toYear: 1999 }
     ];
-    const actual = getYearRangesFromInd(321, NinTypeEnum.TYPE_D_NUMBER);
+    const actual = getYearRangesFromInd(321, NinType.TYPE_D_NUMBER);
 
     expect(actual).toBeTruthy();
     expect(compareArrays(actual, expected)).toBe(true);
@@ -252,7 +252,7 @@ describe('individual-number-utilities', () => {
     const expected = [
       { fromYear: 1854, toYear: 1999 }
     ];
-    const actual = getYearRangesFromInd(498, NinTypeEnum.TYPE_D_NUMBER);
+    const actual = getYearRangesFromInd(498, NinType.TYPE_D_NUMBER);
 
     expect(actual).toBeTruthy();
     expect(compareArrays(actual, expected)).toBe(true);
@@ -263,7 +263,7 @@ describe('individual-number-utilities', () => {
     const expected = [
       { fromYear: 2000, toYear: 2300 }
     ];
-    const actual = getYearRangesFromInd(560, NinTypeEnum.TYPE_D_NUMBER);
+    const actual = getYearRangesFromInd(560, NinType.TYPE_D_NUMBER);
 
     expect(actual).toBeTruthy();
     expect(compareArrays(actual, expected)).toBe(true);
@@ -274,7 +274,7 @@ describe('individual-number-utilities', () => {
     const expected = [
       { fromYear: 2000, toYear: 2300 }
     ];
-    const actual = getYearRangesFromInd(650, NinTypeEnum.TYPE_D_NUMBER);
+    const actual = getYearRangesFromInd(650, NinType.TYPE_D_NUMBER);
 
     expect(actual).toBeTruthy();
     expect(compareArrays(actual, expected)).toBe(true);
@@ -285,7 +285,7 @@ describe('individual-number-utilities', () => {
     const expected = [
       { fromYear: 2000, toYear: 2300 }
     ];
-    const actual = getYearRangesFromInd(999, NinTypeEnum.TYPE_D_NUMBER);
+    const actual = getYearRangesFromInd(999, NinType.TYPE_D_NUMBER);
 
     expect(actual).toBeTruthy();
     expect(compareArrays(actual, expected)).toBe(true);
