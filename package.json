@@ -1,6 +1,6 @@
 {
   "name": "@halloverden/number-utilities-ts",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Typescript library with utility functions for a bunch of numbers",
   "private": false,
   "type": "module",
